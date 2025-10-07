@@ -1,14 +1,21 @@
-const Ship = class{
-    consructor (shipLength, hitNum){
+ class Ship{
+    constructor(shipLength){
         this.shipLength = shipLength;
-        this.hitNum = hitNum;
-        this.sunk = false;
+        this.hitNum = 0;
+  
     }
     hit(){
-      return hitNum++
+    this.hitNum++
     }
 
     isSunk(){
-        this.hitNum >= this.shipLength ? true : false;
+        if(this.hitNum >= this.shipLength)
+            {
+                return true
+            } else {
+                return false
+            };
     }
 }
+
+module.exports = Ship
