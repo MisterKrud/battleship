@@ -1,0 +1,19 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "main": "battleship.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MisterKrud/battleship.git"
+  },
+  "author": "Allyn Smith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MisterKrud/battleship/issues"
+  },
+  "homepage": "https://github.com/MisterKrud/battleship#readme",
+  "description": ""
+}
