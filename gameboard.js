@@ -22,14 +22,17 @@ const gameboard = (rows = 10, cols = 10)=>{
         const submarine = new Ship(3, "Submarine")
         const destroyer = new Ship(2, "Destroyer")
 
-    const placeShip = (ship, row, col) => {
+    const placeShip = (ship, row, col, direction='row') => {
         let arr = [];
         const shipName = (`${ship.shipName}`).split('');
         const shipAbbrev = `${shipName[0]}${shipName[1]}${shipName[2]}`
         for(l=0; l<ship.shipLength; l++){
             arr.push(shipAbbrev)
-            board[row][col+l] = [shipAbbrev]
-
+            if(direction === 'col'){
+                board[row+l][col] = [shipAbbrev]
+            } else {
+                 board[row][col+l] = [shipAbbrev]
+            }
         }
         return shipAbbrev
     
