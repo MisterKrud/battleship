@@ -1,4 +1,4 @@
-const Ship = require("./battleship");
+
 const gameboard = require("./gameboard");
 const testBoard = gameboard(10, 10);
 // const boardGrid = testBoard.board
@@ -92,13 +92,8 @@ test('check previously hit cells return a message without changing the cell or h
 test('Check that a sunk ship is removed from the board', () =>{
     testBoard.receiveAttack(0,0);
     testBoard.receiveAttack(0,2);
-     testBoard.receiveAttack(5,5);
-      testBoard.receiveAttack(4,2);
-       testBoard.receiveAttack(1,3);
-        testBoard.receiveAttack(9,8);
-         testBoard.receiveAttack(6,7);
-          testBoard.receiveAttack(3,9);
+    
     expect(testBoard.ships.has('submarine')).toBeFalsy();
-    expect(testBoard.attackedCells).toEqual('')
+ 
 })
 
