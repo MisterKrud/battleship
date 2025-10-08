@@ -42,6 +42,10 @@ const gameboard = (rows = 10, cols = 10)=>{
     
     }
 
+    const receiveAttack = (row, col)=>{
+        return board[row][col]
+    }
+
         
 
 
@@ -49,7 +53,7 @@ const gameboard = (rows = 10, cols = 10)=>{
 
 
 
-    return {board, carrier, battleship, cruiser, submarine, destroyer, placeShip}
+    return {board, carrier, battleship, cruiser, submarine, destroyer, placeShip, receiveAttack}
 }
 
 

@@ -40,5 +40,23 @@ test('Check placeShip prevents ship placement outside the board', ()=>{
     testBoard.placeShip(testBoard.cruiser(7, 1, 'col'))
    }
     expect(placeCruiser).toThrow(Error);
-    expect(placeCruiserCol).toThrow(Error)
+    expect(placeCruiserCol).toThrow(Error);
+})
+
+test('Check receiveAttack registers on correct coordinate/ship', ()=>{
+    expect(testBoard.receiveAttack(3, 7)).toEqual(["3,7"])
+})
+
+test('Check receive attack registers ship in cell', ()=>{
+     testBoard.placeShip(testBoard.submarine, 5, 4, 'row');
+     expect(testBoard.receiveAttack(5,4)).toEqual(["Sub"])
+})
+
+test('Check ship is sunk when all parts are hit', ()=>{
+    testBoard.placeShip(testBoard.destroyer, 4,7, 'col')
+    expect(testBoard.destroyer.isSunk()).toBeFalsy();
+
+    testBoard.destroyer.hit();
+    testBoard.destroyer.hit();
+    expect(testBoard.destroyer.isSunk()).toBeTruthy();
 })
