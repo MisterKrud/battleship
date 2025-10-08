@@ -32,18 +32,18 @@ const ships = [carrier,battleship,cruiser,submarine,destroyer]
             throw new Error("The ship is too big to be placed there")
         
         }
-        let arr = [];
+    
         const shipName = ship.shipName.substring(0,3)
         for(l=0; l<ship.shipLength; l++){
            
             if(direction === 'col'){
                 board[row+l][col] = ship.shipName
-            //    arr.push(row+l, col)
+     
             } else {
                  board[row][col+l] = ship.shipName
-                //  arr.push(row, col+1)
+             
             }
-            ship.cells = arr 
+          
             ship.abbr = shipName
         }
         
@@ -54,12 +54,14 @@ const ships = [carrier,battleship,cruiser,submarine,destroyer]
     const receiveAttack = (row, col)=>{
        
         if (board[row][col] === `${row},${col}`){
-           board[row][col] = '🚫'
+           board[row][col] = "🚫"
         } else {ships.forEach(shipObj =>{
             
         if(board[row][col]===shipObj.shipName){
             board[row][col] = "💥"
             shipObj.hit()
+        } else if(board[row][col] === "🚫" || board[row][col] === "💥"){
+            return "Cell has already been hit"
         }
     })
 }         

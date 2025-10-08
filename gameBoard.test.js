@@ -69,3 +69,12 @@ test('check ship is sunk when after appropriate number of reveiveAttack()',()=>{
     testBoard.receiveAttack(5,6);
     expect(testBoard.cruiser.isSunk()).toBeTruthy()
 })
+
+test('check previously hit cells return a message without changin the cell',()=>{
+   testBoard.receiveAttack(0,1);
+    expect(testBoard.board[0][1]).toBe('💥')
+    expect(testBoard.submarine.hitNum).toBe(1)
+    testBoard.receiveAttack(0,1);
+    expect(testBoard.submarine.hitNum).toBe(1)
+})
+
