@@ -2,6 +2,9 @@
   "name": "battleship",
   "version": "1.0.0",
   "main": "battleship.js",
+   "jest": {
+    "verbose": true
+  },
   "scripts": {
     "test": "jest"
   },
@@ -15,5 +18,10 @@
     "url": "https://github.com/MisterKrud/battleship/issues"
   },
   "homepage": "https://github.com/MisterKrud/battleship#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "@babel/preset-env": "^7.28.3",
+    "babel-jest": "^30.2.0"
+  }
 }

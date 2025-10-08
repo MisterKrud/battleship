@@ -14,15 +14,24 @@ const gameboard = (rows = 10, cols = 10)=>{
     }
 
     const board = getBoard(rows, cols)
+    
 
     
-        const carrier = new Ship(5, "Carrier")
-        const battleship = new Ship(4, "Battleship")
-        const cruiser = new Ship(3, "Cruiser")
-        const submarine = new Ship(3, "Submarine")
-        const destroyer = new Ship(2, "Destroyer")
+        const carrier = new Ship(5, "carrier")
+        const battleship = new Ship(4, "battleship")
+        const cruiser = new Ship(3, "cruiser")
+        const submarine = new Ship(3, "submarine")
+        const destroyer = new Ship(2, "destroyer")
 
-const ships = [carrier,battleship,cruiser,submarine,destroyer]
+        const ships = new Map([
+            ['carrier', carrier],
+            ['battleship', battleship],
+            ['cruiser', cruiser],
+            ['submarine', submarine],
+            ['destroyer', destroyer],
+        ])
+
+
       
 
  
@@ -51,15 +60,22 @@ const ships = [carrier,battleship,cruiser,submarine,destroyer]
     
     }
 
+
+    let attackedCells = []
     const receiveAttack = (row, col)=>{
        
         if (board[row][col] === `${row},${col}`){
            board[row][col] = "🚫"
+           attackedCells.push(`${row},${col}`)
+           console.log(attackedCells)
         } else {ships.forEach(shipObj =>{
             
         if(board[row][col]===shipObj.shipName){
             board[row][col] = "💥"
-            shipObj.hit()
+            shipObj.hit();
+            if(shipObj.hitNum <= 0){
+                ships.delete(`${shipObj.shipName}`)
+            }
         } else if(board[row][col] === "🚫" || board[row][col] === "💥"){
             return "Cell has already been hit"
         }
@@ -69,18 +85,14 @@ const ships = [carrier,battleship,cruiser,submarine,destroyer]
        
     }
 
-    const getProperties = () =>{
-       const prop =  ships.forEach(boat =>{
-        return boat.abbr
-       })
-    }
+    
 
 
 
+//return map insteadof ships?
+//
 
-
-
-    return {getProperties,board, carrier, battleship, cruiser, submarine, destroyer, placeShip, receiveAttack, ships}
+    return {board, carrier, battleship, cruiser, submarine, destroyer, placeShip, receiveAttack, ships}
 }
 
 
