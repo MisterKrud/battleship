@@ -23,6 +23,10 @@ const gameboard = (rows = 10, cols = 10)=>{
         const destroyer = new Ship(2, "Destroyer")
 
     const placeShip = (ship, row, col, direction='row') => {
+        if(row+ship.shipLength>board.length || col+ship.shipLength>board[row].length){
+            throw new Error("The ship is too big to be placed there")
+            return
+        }
         let arr = [];
         const shipName = (`${ship.shipName}`).split('');
         const shipAbbrev = `${shipName[0]}${shipName[1]}${shipName[2]}`
