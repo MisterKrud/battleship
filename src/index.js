@@ -4,20 +4,25 @@ const Ship = require("./battleship")
 const Gameboard = require("./gameboard");
 const Player = require("./player");
 
-const player = Player()
-const player1Board = player.board;
-const Player2Board = player.board;
+const player1 = Player("human", "Player 1")
+const player2 = Player("human", "Player 2")
+const player1Board = player1.board;
+const player2Board = player2.board;
 const body = document.querySelector("body")
-const playerOneBoard = document.getElementById("player-one-board");
+// const playerOneBoard = document.getElementById("player-one-board");
+const playerTwoBoard = document.getElement
 
-const renderBoard = () => {
-    for(let i=0; i< 10; i++){
+const renderBoard = (playerGameBoard) => {
+      const playerBoard = document.createElement("div");
+    playerBoard.className = "board"
+    body.appendChild(playerBoard)
+    for(let i=0; i< playerGameBoard.length; i++){
     const row = document.createElement("div");
-    
-     playerOneBoard.appendChild(row);
+  
+     playerBoard.appendChild(row);
      row.classList.add("row")
     
-     for(let j=0; j< 10; j++){
+     for(let j=0; j<playerGameBoard[0].length; j++){
         const col = document.createElement("div");
         col.classList.add("cell")
         row.appendChild(col)
@@ -26,4 +31,5 @@ const renderBoard = () => {
     }
 }
 
-renderBoard()
+renderBoard(player1Board);
+renderBoard(player2Board)
