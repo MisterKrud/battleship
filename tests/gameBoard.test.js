@@ -1,5 +1,5 @@
 
-const gameboard = require("./gameboard");
+const gameboard = require("../src/gameboard");
 const testBoard = gameboard(10, 10);
 // const boardGrid = testBoard.board
 
