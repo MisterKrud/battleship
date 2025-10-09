@@ -38,7 +38,7 @@ const gameboard = (rows = 10, cols = 10)=>{
 
     const placeShip = (ship, row, col, direction='row') => {
         if(row+ship.shipLength>board.length || col+ship.shipLength>board[row].length){
-            throw new Error("The ship is too big to be placed there")
+            throw new Error(`The ${ship.shipName} is too big to be placed there`)
         
         }
     
@@ -46,10 +46,10 @@ const gameboard = (rows = 10, cols = 10)=>{
         for(l=0; l<ship.shipLength; l++){
            
             if(direction === 'col'){
-                board[row+l][col] = ship.shipName
+                board[row+l][col] = shipName.toUpperCase()
      
             } else {
-                 board[row][col+l] = ship.shipName
+                 board[row][col+l] = shipName.toUpperCase()
              
             }
           
