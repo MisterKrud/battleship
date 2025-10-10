@@ -92,7 +92,7 @@ const gameboard = (rows = 10, cols = 10)=>{
 //return map insteadof ships?
 //
 
-    return {board, carrier, battleship, cruiser, submarine, destroyer, placeShip, receiveAttack, ships}
+    return {board, attackedCells, carrier, battleship, cruiser, submarine, destroyer, placeShip, receiveAttack, ships}
 }
 
 
