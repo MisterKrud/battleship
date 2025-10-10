@@ -91,14 +91,15 @@ const playRound = (player = players[0], opposition = players[1]) => {
   oppositionBoard.classList.remove("active");
 
   const handler = (e) => {
-    if (!e.target.classList === "cell") {
-      console.log(`not a cell`);
+    if (!e.target.classList === "cell" || e.target.classList.contains("hit")) {
+      console.log(`not a valid cell`);
       return;
     } else {
       const row = e.target.getAttribute("row");
       const col = e.target.getAttribute("col");
       opposition.playerBoard.receiveAttack(row, col);
       e.target.textContent = opposition.board[row][col];
+      e.target.classList.add("hit")
       console.log(`ReceiveAttack at ${row}-${col}`);
       board.removeEventListener("click", handler);
       if (opposition.playerBoard.ships.size === 0) {
@@ -114,22 +115,37 @@ const playRound = (player = players[0], opposition = players[1]) => {
     }
   };
   if (player.type === "computer") {
+    
     // const computerPlayRound = computerPlayer.playRound()
-    const getNewAttackCoords = () => computerPlayer.playRound();
- 
+    const getNewAttackCoords = (n=0) => {
+
+       let cellToHit = computerPlayer.playRound();
+       const boardCell = document.getElementById(`player-2-${cellToHit[0]}${cellToHit[1]}`)
+       console.log(`Cell to hit:${cellToHit[0]}${cellToHit[1]}`)
+       console.log(boardCell)
+       if(boardCell.classList.contains("hit")){
+        console.log(`Cell ${cellToHit} - already hit`)
+        console.log(`Running again: number ${n}`)
+        n++
+        cellToHit = getNewAttackCoords(n)
+        
+       }
+       boardCell.classList.add("hit")
+       return cellToHit
+    }
 
     const getComputerAttackCoords = () => {
      let computerPlayerCell = getNewAttackCoords();
       console.log(`computerPlayerCell`)
       console.log(computerPlayerCell)
-      while (opposition.playerBoard.attackedCells.includes(computerPlayerCell)) {
+    //   while (player.playerBoard.attackedCells.includes(computerPlayerCell)) {
         
       
-           computerPlayerCell = getNewAttackCoords()
-           return computerPlayerCell
+    //        computerPlayerCell = getNewAttackCoords()
+    //        return computerPlayerCell
       
          
-      }
+    //   }
 
     //   if(computerPlayer.hits.length>0){
     //         console.log(`Let's use the array!`)
