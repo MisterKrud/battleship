@@ -41,9 +41,12 @@ const renderBoard = (player) => {
         const col = document.createElement("div");
         col.classList.add("cell")
         row.appendChild(col)
-        col.textContent = player.board[i][j]
-        col.setAttribute("row", `${i}`)
-        col.setAttribute("col", `${j}`)
+        // col.textContent = player.board[i][j]
+        if(player.board[i][j] !== `${i},${j}`){
+          col.classList.add("ship", `ship--${player.board[i][j]}`)
+        }
+        col.setAttribute("data-row", `${i}`)
+        col.setAttribute("data-col", `${j}`)
      }
     
     }
@@ -91,8 +94,8 @@ const playRound = (player = players[0], opposition = players[1]) =>{
           console.log(`not a cell`)
           return
         } else {
-          const row = e.target.getAttribute("row");
-          const col = e.target.getAttribute("col");
+          const row = e.target.getAttribute("data-row");
+          const col = e.target.getAttribute("data-col");
           opposition.playerBoard.receiveAttack(row, col)
           e.target.textContent = opposition.board[row][col]
           console.log(`ReceiveAttack at ${row}-${col}`)

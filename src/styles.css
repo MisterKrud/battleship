@@ -27,3 +27,7 @@
 .win .cell{
     background-color: lightgreen;
 }
+
+.ship{
+    background-color: lightsteelblue !important;
+}
