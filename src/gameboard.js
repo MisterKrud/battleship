@@ -62,6 +62,7 @@ const gameboard = (rows = 10, cols = 10)=>{
 
 
     let attackedCells = []
+    let hits = []
     const receiveAttack = (row, col)=>{
        
         if (board[row][col] === `${row},${col}`){
@@ -72,6 +73,8 @@ const gameboard = (rows = 10, cols = 10)=>{
             
         if(board[row][col]===shipObj.shipName){
             board[row][col] = "💥"
+            hits.push(`${row},${col}`)
+            attackedCells.push(`${row},${col}`)
             shipObj.hit();
             if(shipObj.hitNum <= 0){
                 ships.delete(`${shipObj.shipName}`)
