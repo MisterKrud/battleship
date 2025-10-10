@@ -19,3 +19,11 @@
 .row {
     display: flex;
 }
+
+.active .cell{
+    background-color: lightpink;
+}
+
+.win .cell{
+    background-color: lightgreen;
+}

@@ -46,10 +46,10 @@ const gameboard = (rows = 10, cols = 10)=>{
         for(l=0; l<ship.shipLength; l++){
            
             if(direction === 'col'){
-                board[row+l][col] = shipName.toUpperCase()
+                board[row+l][col] = ship.shipName
      
             } else {
-                 board[row][col+l] = shipName.toUpperCase()
+                 board[row][col+l] = ship.shipName
              
             }
           
