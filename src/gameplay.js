@@ -176,10 +176,17 @@ const placeShips = (player) =>{
      const shipIterator = player.playerBoard.ships.values()
     
         const shipHelper = (e) => {
+            if(!e.target.classList.contains("cell")){
+                return
+             } //else {
            
          let row = e.target.getAttribute("row");
       let col = e.target.getAttribute("col");
         e.target.setAttribute("style", "background-color: blue")
+        e.target.addEventListener("mouseleave", ()=>{
+            e.target.setAttribute("style", "background-color: none")
+        })
+
       e.target.addEventListener("click", ()=>{
         let nextShip = shipIterator.next().value
         if(nextShip === undefined) {
