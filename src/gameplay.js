@@ -2,7 +2,7 @@ import { computerPlayer } from "./computerPlayer";
 const Player = require("./player");
 
 const player1 = Player("human", "Player 1");
-const player2 = Player("computer", "Player 2");
+const player2 = computerPlayer("computer", "Player 2")
 
 const body = document.querySelector("body");
 // const playerOneBoard = document.getElementById("player-one-board");
@@ -78,7 +78,7 @@ const changeAcitvePlayer = () => {
 };
 
 const playRound = (player = players[0], opposition = players[1]) => {
-  console.log(`playRound(): ${player.name}`);
+//   console.log(`playRound(): ${player.name}`);
 
   announcements.textContent = `${player.name}'s turn`;
   const board = document.getElementById(
@@ -100,44 +100,45 @@ const playRound = (player = players[0], opposition = players[1]) => {
       opposition.playerBoard.receiveAttack(row, col);
       e.target.textContent = opposition.board[row][col];
       e.target.classList.add("hit")
-      console.log(`ReceiveAttack at ${row}-${col}`);
+    //   console.log(`ReceiveAttack at ${row}-${col}`);
       board.removeEventListener("click", handler);
       if (opposition.playerBoard.ships.size === 0) {
         gameOver = true;
         board.classList.remove("active");
         board.classList.add("win");
       }
-      console.log(opposition.board);
-      console.log(opposition.playerBoard.ships.size);
-      console.log(`Next round`);
-      console.log(gameOver);
+    //   console.log(`${player.name}'s board:`)
+    //   console.log(opposition.board);
+    //   console.log(opposition.playerBoard.ships.size);
+    //   console.log(`Next round`);
+    //   console.log(`Game over: ${gameOver}`);
       playGame();
     }
   };
   if (player.type === "computer") {
     
     // const computerPlayRound = computerPlayer.playRound()
-    const getNewAttackCoords = (n=0) => {
+    // const getNewAttackCoords = (n=0) => {
 
-       let cellToHit = computerPlayer.playRound();
-       const boardCell = document.getElementById(`player-2-${cellToHit[0]}${cellToHit[1]}`)
-       console.log(`Cell to hit:${cellToHit[0]}${cellToHit[1]}`)
-       console.log(boardCell)
-       if(boardCell.classList.contains("hit")){
-        console.log(`Cell ${cellToHit} - already hit`)
-        console.log(`Running again: number ${n}`)
-        n++
-        cellToHit = getNewAttackCoords(n)
+    //    let cellToHit = computerPlayer.playRound();
+    //    const boardCell = document.getElementById(`player-2-${cellToHit[0]}${cellToHit[1]}`)
+    //    console.log(`Cell to hit:${cellToHit[0]}${cellToHit[1]}`)
+    //    console.log(boardCell)
+    //    if(boardCell.classList.contains("hit")){
+    //     console.log(`Cell ${cellToHit} - already hit`)
+    //     console.log(`Running again: number ${n}`)
+    //     n++
+    //     cellToHit = getNewAttackCoords(n)
         
-       }
-       boardCell.classList.add("hit")
-       return cellToHit
-    }
+    //    }
+    //    boardCell.classList.add("hit")
+    //    return cellToHit
+    // }
 
-    const getComputerAttackCoords = () => {
-     let computerPlayerCell = getNewAttackCoords();
-      console.log(`computerPlayerCell`)
-      console.log(computerPlayerCell)
+    // const getComputerAttackCoords = () => {
+    //  let computerPlayerCell = player2.getNewAttackCoords();
+    //   console.log(`computerPlayerCell`)
+    //   console.log(computerPlayerCell)
     //   while (player.playerBoard.attackedCells.includes(computerPlayerCell)) {
         
       
@@ -178,30 +179,35 @@ const playRound = (player = players[0], opposition = players[1]) => {
               
     //     }
 
-       console.log(`computerPlayerCell`)
-       console.log(computerPlayerCell)
-      return computerPlayerCell;
-    };
-    const attackCoords = getComputerAttackCoords();
+    //    console.log(`computerPlayerCell`)
+    //    console.log(computerPlayerCell)
+    //   return computerPlayerCell;
+    // };
+    const attackCoords = player.getComputerAttackCoords();
     console.log(`Attack Coords`)
     console.log(attackCoords);
     opposition.playerBoard.receiveAttack(attackCoords[0], attackCoords[1]);
     const attackedCell = document.getElementById(
-      `player-2-${attackCoords[0]}${attackCoords[1]}`
+      `${player.name.replace(" ", "-").toLowerCase()}-${attackCoords[0]}${attackCoords[1]}`
     );
-    if(attackedCell.classList.contains("ship")){
-        computerPlayer.hits.push(attackCoords)
-        console.log(`computer player hits after attacked cell`)
-        console.log(computerPlayer.hits)
-    }
-    attackedCell.textContent =
-      opposition.board[attackCoords[0]][attackCoords[1]];
+    // if(attackedCell.classList.contains("ship")){
+    //     computerPlayer.hits.push(attackCoords)
+    //     console.log(`computer player hits after attacked cell`)
+    //     console.log(computerPlayer.hits)
+    // }
+    attackedCell.textContent = opposition.board[attackCoords[0]][attackCoords[1]];
     if (opposition.playerBoard.ships.size === 0) {
       gameOver = true;
       board.classList.remove("active");
       board.classList.add("win");
     }
-    playGame();
+     console.log(`${player.name}'s board:`)
+      console.log(opposition.board);
+      console.log(opposition.playerBoard.ships.size);
+      console.log(`Next round`);
+      console.log(`Game over: ${gameOver}`);
+      playGame();
+    
   } else {
     board.addEventListener("click", handler);
   }
