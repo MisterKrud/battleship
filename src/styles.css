@@ -28,23 +28,6 @@
     background-color: lightgreen;
 }
 
-.ship--destroyer{
+.ship{
     background-color: lightsteelblue !important;
 }
-
-.ship--submarine{
-    background-color: lightgoldenrodyellow !important;
-}
-
-.ship--cruiser{
-    background-color: lightgreen !important;
-}
-
-.ship--battleship{
-    background-color: rgb(191, 148, 216) !important;
-}
-
-.ship--carrier{
-    background-color: lightpink !important;
-}
-

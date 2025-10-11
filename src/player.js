@@ -5,7 +5,7 @@ const gameboard = require("./gameboard")
 const Player = (type = "human", name) => {
     
 const playerBoard = gameboard(10,10)
-let board = playerBoard.board
+const board = playerBoard.board
 const gameOver = ()=> playerBoard.ships.size === 0 ? true : false
 
 
