@@ -179,29 +179,47 @@ const placeShips = (player) =>{
             if(!e.target.classList.contains("cell")){
                 return
              } //else {
-           
+           let directions = ["row", "col"]
          let row = e.target.getAttribute("row");
       let col = e.target.getAttribute("col");
         e.target.setAttribute("style", "background-color: blue")
         e.target.addEventListener("mouseleave", ()=>{
             e.target.setAttribute("style", "background-color: none")
+            e.target.textContent = ""
         })
-
+        e.target.addEventListener("wheel", ()=>{
+            const newDirection = directions.pop()
+            directions.unshift(newDirection)
+            if(directions[0]==="row"){
+                e.target.textContent = "➡"
+            } else if(directions[0] ==="col"){
+                e.target.textContent = "⬇"
+            }
+            console.log(directions)
+        })
       e.target.addEventListener("click", ()=>{
         let nextShip = shipIterator.next().value
         if(nextShip === undefined) {
             board.removeEventListener("mouseover", shipHelper)
             return
         }
-        player.playerBoard.placeShip(nextShip, row, col )
+        player.playerBoard.placeShip(nextShip, row, col, directions[0] )
         for(let n=0; n<nextShip.shipLength; n++){
+            if(directions[0]==="row"){
            let x = parseInt(row);
         let y= parseInt(col)+n
            const shipCell = document.getElementById(`${playerIdName}-${x}${y}`)
            console.log(`${playerIdName}-${x}${y}`);
            shipCell.classList.add(`ship--${nextShip.shipName}`)
+        }else if(directions[0]==="col"){
+
+             let x = parseInt(row)+n;
+        let y= parseInt(col)
+        const shipCell = document.getElementById(`${playerIdName}-${x}${y}`)
+           console.log(`${playerIdName}-${x}${y}`);
+           shipCell.classList.add(`ship--${nextShip.shipName}`)
         }
-        
+    } 
         
       })
 

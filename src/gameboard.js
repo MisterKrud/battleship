@@ -74,11 +74,11 @@ if(board[parseInt(row)][parseInt(col)+l]!=`${parseInt(row)},${parseInt(col)+l}`)
            
             if(direction === 'col'){
                 
-                board[row+l][col] = ship.shipName
+                board[parseInt(row)+l][parseInt(col)] = ship.shipName
                 console.log(ship.shipName)
      
             } else {
-                 board[row][col+l] = ship.shipName
+                 board[parseInt(row)][parseInt(col)+l] = ship.shipName
              console.log(ship.shipName)
             }
           
