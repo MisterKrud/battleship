@@ -10,9 +10,9 @@
 .cell{
 
     
-    border: .5px solid gray;
-    height: 50px;
-    width: 50px;
+    border: .1px solid gray;
+    height: 1.5rem;
+    width: 1.5rem;
     margin: .5px;
     padding: 2px;
     display: flex;
@@ -29,6 +29,7 @@
 
 .active{
     padding: 0;
+    margin: auto 0;
    border: 2px red solid;
 }
 
