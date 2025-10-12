@@ -170,6 +170,7 @@ const placeShips = (player) =>{
     let directions = ["row", "col"]
      let arrows = ["➡", "⬇"]
     console.log(player.playerBoard.ships)
+    console.log(player.playerBoard.shipArray)
  const playerIdName = player.name.replace(" ", "-").toLowerCase()
        const board = document.getElementById(playerIdName);
     //  const board = document.querySelector("body")
@@ -241,13 +242,17 @@ const resetCellStylingOnMouseleave = (e)=>{
 
 //PLACE SHIPS ON THE BOARD
 const checkAndPlaceShipsOnBoard = (e) =>{
-             let nextShip = shipIterator.next().value
+    console.log(player.playerBoard.shipArray[0])
+             let nextShip = player.playerBoard.shipArray[0]
            
-        if(nextShip === undefined) {
-            board.removeEventListener("mouseover", shipHelper)
-            
+        if(player.playerBoard.shipArray.length <=0) {
+            board.removeEventListener("mouseover", checkAndPlaceShipsOnBoard)
+            board.removeEventListener("mouseover",highlightCells )
+
+             board.removeEventListener("wheel", changeShipDirection)
+  
             return
-        }
+        } else {
          console.log(`At top of click: ${nextShip.shipName}`)
         // console.log(`Click Row & col - ${row}, ${col} -(${typeof(row)}s)`)
          let shipCell = e.target
@@ -277,14 +282,15 @@ const checkAndPlaceShipsOnBoard = (e) =>{
         if(x<player.board.length && y<player.board.length){
             console.log(`At placeShip function :${directions}`)
          player.playerBoard.placeShip(nextShip, row, col, directions[0] )
-         shipCell.classList.add(`ship--${nextShip.shipName}`)
+         if(player.board[x][y] === nextShip.shipName) shipCell.classList.add(`ship--${nextShip.shipName}`)
          console.log(`After placeShip function: ${nextShip.shipName}`)
+         
         } else {
             console.log(`x and y conditions not met: x - ${x} | y - ${y}`)
             console.log(player.board.length)
         }
         }
-       
+    }
         
     } 
       

@@ -31,6 +31,7 @@ const gameboard = (rows = 10, cols = 10)=>{
             ['destroyer', destroyer],
         ])
 
+        const shipArray = [carrier, battleship, cruiser, submarine, destroyer]
 
       const placedShips =[]
 
@@ -45,7 +46,7 @@ const gameboard = (rows = 10, cols = 10)=>{
             return
             // throw new Error(`The ${ship.shipName} is too big to be placed there`)
        
-        }
+        } 
        for(l=0; l<ship.shipLength; l++){
         if(direction === "col"){
             console.log({
@@ -94,6 +95,7 @@ if(board[parseInt(row)][parseInt(col)+l]!=`${parseInt(row)},${parseInt(col)+l}`)
           
             ship.abbr = shipName
         }
+        shipArray.shift()
         placedShips.push(ship)
         return ship.cells
     
@@ -134,7 +136,7 @@ if(board[parseInt(row)][parseInt(col)+l]!=`${parseInt(row)},${parseInt(col)+l}`)
 //return map insteadof ships?
 //
 
-    return {board, attackedCells, carrier, battleship, cruiser, submarine, destroyer, placeShip, receiveAttack, ships}
+    return {board, shipArray, attackedCells, carrier, battleship, cruiser, submarine, destroyer, placeShip, receiveAttack, ships}
 }
 
 
