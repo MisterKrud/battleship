@@ -7,7 +7,7 @@ const gameboard = (rows = 10, cols = 10)=>{
         for(let i = 0; i<rows; i++){
             boardArray[i]=[]
             for(let j=0; j< cols; j++){
-                boardArray[i].push(`${i},${j}`)
+                boardArray[i].push(`-`)
             }
         }
         return boardArray
@@ -40,9 +40,10 @@ const gameboard = (rows = 10, cols = 10)=>{
     const placeShip = (ship, row, col, direction='row') => {
         console.log(board)
        
-        if(parseInt(row)+parseInt(ship.shipLength)>board.length || parseInt(col)+parseInt(ship.shipLength)>board.length){
+        if(parseInt(row)+parseInt(ship.shipLength-1)>board.length && parseInt(col)+parseInt(ship.shipLength-1)>board.length){
             console.log(col+(ship.shipLength))
             console.log(`${ship.shipName} won't fit`)
+            console.log(`Wants to access up to: ${parseInt(row)+parseInt(ship.shipLength-1)} & ${parseInt(col)+parseInt(ship.shipLength-1)}`)
             return
             // throw new Error(`The ${ship.shipName} is too big to be placed there`)
        
@@ -58,7 +59,7 @@ const gameboard = (rows = 10, cols = 10)=>{
   boardRow: board[parseInt(row) + l],
   boardLength: board.length
 });
-            if(board[parseInt(row)+l][parseInt(col)]!=`${parseInt(row)+l},${parseInt(col)}`){
+            if(board[parseInt(row)+l][parseInt(col)]!==`-`){
                
                  console.log(`${ship.shipName} will hit another ship`)
                 return
@@ -66,12 +67,12 @@ const gameboard = (rows = 10, cols = 10)=>{
             }
         } else {
             if(direction === "row"){
-if(board[parseInt(row)][parseInt(col)+l]!=`${parseInt(row)},${parseInt(col)+l}`){
+if(board[parseInt(row)][parseInt(col)+l]!=`-`){
     // console.log(`typeofs`)
     // console.log(typeof(row), typeof(parseInt(row)))
     // console.log(typeof(col), typeof(parseInt(col)))
     // console.log(typeof(l), typeof(parseInt(l)))
-                 console.log(board[parseInt(row)][parseInt(col)+l] + ` &&& ${parseInt(row)},${parseInt(col)+l}`)
+                 console.log(`Cell text: ${board[parseInt(row)][parseInt(col)+l]}`)
                 console.log(`${ship.shipName} will hit another ship`)
                 return
                 //  throw new Error(`The ${ship.shipName} will intersect with your ${board[row+l][col]}`)
@@ -106,7 +107,7 @@ if(board[parseInt(row)][parseInt(col)+l]!=`${parseInt(row)},${parseInt(col)+l}`)
     let hits = []
     const receiveAttack = (row, col)=>{
        
-        if (board[row][col] === `${row},${col}`){
+        if (board[row][col] === `-`){
            board[row][col] = "🚫"
            attackedCells.push(`${row},${col}`)
            console.log(attackedCells)

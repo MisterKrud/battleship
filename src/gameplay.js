@@ -247,9 +247,9 @@ const checkAndPlaceShipsOnBoard = (e) =>{
            
         if(player.playerBoard.shipArray.length <=0) {
             board.removeEventListener("mouseover", checkAndPlaceShipsOnBoard)
-            board.removeEventListener("mouseover",highlightCells )
+        
 
-             board.removeEventListener("wheel", changeShipDirection)
+            
   
             return
         } else {
@@ -284,7 +284,13 @@ const checkAndPlaceShipsOnBoard = (e) =>{
          player.playerBoard.placeShip(nextShip, row, col, directions[0] )
          if(player.board[x][y] === nextShip.shipName) shipCell.classList.add(`ship--${nextShip.shipName}`)
          console.log(`After placeShip function: ${nextShip.shipName}`)
-         
+         if(player.playerBoard.shipArray.length <=0){
+             board.removeEventListener("wheel", changeShipDirection)
+            const domBoardCells = board.querySelectorAll(".cell");
+            domBoardCells.forEach(cell => cell.removeEventListener("mouseleave",resetCellStylingOnMouseleave))
+            board.removeEventListener("mouseover", highlightCells)
+            shipCell.textContent = ''
+         }
         } else {
             console.log(`x and y conditions not met: x - ${x} | y - ${y}`)
             console.log(player.board.length)
