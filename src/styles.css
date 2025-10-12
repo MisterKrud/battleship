@@ -1,3 +1,8 @@
+@keyframes shrink {
+  from { transform: scale(2); }
+  to { transform: scale(1); }
+}
+
 .board{
     margin: 40px;
 }
@@ -31,6 +36,11 @@
     background-color: lightgreen;
 }
 
+.ship{
+    border-radius: .6rem;
+    
+}
+
 .ship--destroyer{
     background-color: lightsteelblue !important;
 }
@@ -51,3 +61,10 @@
     background-color: lightpink !important;
 }
 
+.animate{
+    transform: scale(1.5);
+  animation: shrink 1s forwards;
+  border: none;
+  border-radius: 50%;
+  background-color:rgb(219, 214, 219);
+}

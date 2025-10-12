@@ -1,22 +1,26 @@
 import { computerPlayer } from "./computerPlayer";
-
 const Player = require("./player");
 
-const player1 = Player("human", "Player 1")
-const player2 = computerPlayer("computer", "Player 2")
-// export const player3 = computerPlayer("computer", "Player 3");
+//Get players
 
+let player1 = Player("human", "Player 1")
+let player2 = computerPlayer("computer", "Player 2")
+
+//--------Render initial DOM elements--------------
 const body = document.querySelector("body");
 
-
-
+//Mke boards for both players
 const renderBoard = (player) => {
    
   const playerBoard = document.createElement("div");
+
+  playerBoard.className = "";
   playerBoard.className = "board";
   const boardId = player.name.replace(" ", "-").toLowerCase();
   playerBoard.id = boardId;
   body.appendChild(playerBoard);
+
+  //Create rows and cells to match player gameboards
   for (let i = 0; i < player.board.length; i++) {
     const row = document.createElement("div");
 
@@ -28,9 +32,10 @@ const renderBoard = (player) => {
       col.classList.add("cell");
       row.appendChild(col);
 
-      if (player.board[i][j] !== `${i},${j}`) {
-        col.classList.add("ship", `ship--${player.board[i][j]}`);
-      }
+      //
+    //   if (player.board[i][j] !== `-`) {
+    //     col.classList.add("ship", `ship--${player.board[i][j]}`);
+    //   }
       col.setAttribute("row", `${i}`);
       col.setAttribute("col", `${j}`);
       col.id = `${boardId}-${i}${j}`;
@@ -58,19 +63,29 @@ placeShips(player1)
 
 //  placeShips(player2)
   startButton.addEventListener("click", () => {
+    if(player1.playerBoard.shipArray.length>0){
+        announcements.textContent = " You need to place all your ships first"
+        announcements.prepend(startButton)
+    } else {
     console.log(`Button clicked: playing round for ${players[0].name}`);
     const board = document.getElementById("player-1")
+    // const boardLabel = document.createElement("div")
+    // boardLabel.textContent = "My ships"
+    // board.appendChild(boardLabel)
     const board2 = document.getElementById("player-2")
+    // const board2Label = document.createElement("div")
+    // board2.textContent = "Their ships"
+    // board2.appendChild(board2Label);
     // const board3 = document.getElementById("player-3")
 
     
-    board.removeEventListener("mouseover", placeShips.shipHelper)
-    board2.removeEventListener("mouseover",  placeShips.shipHelper)
+    // board.removeEventListener("mouseover", placeShips.shipHelper)
+    // board2.removeEventListener("mouseover",  placeShips.shipHelper)
     // board3.removeEventListener("mouseover",  placeShips.shipHelper)
    player2.placeShips()
 //    player3.placeShips()
     playRound();
-   
+    }
   });
 };
 
@@ -94,19 +109,23 @@ const playRound = (player = players[0], opposition = players[1]) => {
   const oppositionBoard = document.getElementById(
     opposition.name.replace(" ", "-").toLowerCase()
   );
-  board.classList.add("active");
-  oppositionBoard.classList.remove("active");
+  board.classList.remove("active");
+  oppositionBoard.classList.add("active");
 
   const handler = (e) => {
     if (!e.target.classList === "cell" || e.target.classList.contains("hit")) {
+        console.log(e.target.classList)
       console.log(`not a valid cell`);
       return;
     } else {
       const row = e.target.getAttribute("row");
       const col = e.target.getAttribute("col");
+       e.target.classList.add("animate")
       opposition.playerBoard.receiveAttack(row, col);
+     
       e.target.textContent = opposition.board[row][col];
       e.target.classList.add("hit")
+      e.target.classList.remove("animate")
     //   console.log(`ReceiveAttack at ${row}-${col}`);
       board.removeEventListener("click", handler);
       if (opposition.playerBoard.ships.size === 0) {
@@ -119,19 +138,23 @@ const playRound = (player = players[0], opposition = players[1]) => {
     }
   };
   if (player.type === "computer") {
-    
-  
+    setTimeout(() => {
     const attackCoords = player.getComputerAttackCoords();
     console.log(`Attack Coords`)
     console.log(attackCoords);
-    opposition.playerBoard.receiveAttack(attackCoords[0], attackCoords[1]);
+    
+  opposition.playerBoard.receiveAttack(attackCoords[0], attackCoords[1]);
+
+   
     const attackedCell = document.getElementById(
-      `${player.name.replace(" ", "-").toLowerCase()}-${attackCoords[0]}${attackCoords[1]}`
+      `${opposition.name.replace(" ", "-").toLowerCase()}-${attackCoords[0]}${attackCoords[1]}`
     );
+    attackedCell.classList.add("animate")
   
     attackedCell.textContent = opposition.board[attackCoords[0]][attackCoords[1]];
     if (opposition.playerBoard.ships.size === 0) {
       gameOver = true;
+      const oppositionCells = oppositionBoard.querySelectorAll(".cell")
       board.classList.remove("active");
       board.classList.add("win");
     }
@@ -140,10 +163,14 @@ const playRound = (player = players[0], opposition = players[1]) => {
       console.log(opposition.playerBoard.ships.size);
       console.log(`Next round`);
       console.log(`Game over: ${gameOver}`);
+      setTimeout(() =>{
+         attackedCell.classList.remove("animate")
+      }, 1000)
       playGame();
-    
+ 
+    }, 500);
   } else {
-    board.addEventListener("click", handler);
+    oppositionBoard.addEventListener("click", handler);
     // console.log('no idea')
     
   }
@@ -154,11 +181,33 @@ export const playGame = () => {
   if (!gameOver) {
     playRound(players[0]);
   } else {
-    announcements.textContent = `${players[0].name} wins! Click Start button to play again`;
-    announcements.appendChild(startButton);
-    startButton.addEventListener("click", () => {
+    announcements.textContent = ` ${players[1].name} wins! Click Start button to play again`;
+    const playAgain = document.createElement("button")
+    playAgain.textContent = "Play again!"
+    announcements.prepend(playAgain);
+    playAgain.addEventListener("click", () => {
         body.innerHTML = ''
-       
+        // player1.board.forEach(row =>{
+        //     row.forEach(cell => {
+        //         row.shift(cell)
+        //         row.unshift('-')
+        //     })
+            
+        // });
+    //     console.log(player1.board)
+    //     player2.board.forEach(row =>{
+    //         row.forEach(cell => {
+    //             row.shift(cell)
+    //             row.unshift('-')
+    //         })
+    //     });
+    //    console.log(player2.board)
+    player1 = Player("human", "Player1")
+    player2 = computerPlayer("computer", "Player 2")
+    players = [player1, player2]
+    gameOver = false
+    announcements.removeChild(playAgain)
+    announcements.textContent = ""
         createDom()
     })
   }
@@ -290,7 +339,7 @@ const checkAndPlaceShipsOnBoard = (e) =>{
         if(x<player.board.length && y<player.board.length){
             console.log(`At placeShip function :${directions}`)
          player.playerBoard.placeShip(nextShip, row, col, directions[0] )
-         if(player.board[x][y] === nextShip.shipName) shipCell.classList.add(`ship--${nextShip.shipName}`)
+         if(player.board[x][y] === nextShip.shipName) shipCell.classList.add(`ship`, `ship--${nextShip.shipName}`)
          console.log(`After placeShip function: ${nextShip.shipName}`)
          if(player.playerBoard.shipArray.length <=0){
              board.removeEventListener("wheel", changeShipDirection)

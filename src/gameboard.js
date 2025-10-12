@@ -13,10 +13,10 @@ const gameboard = (rows = 10, cols = 10)=>{
         return boardArray
     }
 
-    const board = getBoard(rows, cols)
+    let board = getBoard(rows, cols)
     
 
-    
+    const resetBoard = () => getBoard(rows, cols)
         const carrier = new Ship(5, "carrier")
         const battleship = new Ship(4, "battleship")
         const cruiser = new Ship(3, "cruiser")
@@ -144,7 +144,7 @@ if(board[parseInt(row)][parseInt(col)+l]!=`-`){
 //return map insteadof ships?
 //
 
-    return {board, shipArray, attackedCells, carrier, battleship, cruiser, submarine, destroyer, placeShip, receiveAttack, ships}
+    return {board, resetBoard,shipArray, attackedCells, carrier, battleship, cruiser, submarine, destroyer, placeShip, receiveAttack, ships}
 }
 
 

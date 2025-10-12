@@ -1,7 +1,7 @@
 const Player = require ("./player.js")
 
 export const computerPlayer = (type, name) =>  {
-     const {board, playerBoard, gameOver } = Player(type = "computer", name)
+     const {board, playerBoard, gameOver, clearBoard } = Player(type = "computer", name)
 
 
 
@@ -95,7 +95,7 @@ const getComputerAttackCoords = () => {
 
 
     };
-    return { board, playerBoard, gameOver, placeShips, getComputerAttackCoords,type, name}
+    return { board, playerBoard, gameOver, placeShips, getComputerAttackCoords,type, name, clearBoard}
 }
 
 
