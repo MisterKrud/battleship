@@ -1,24 +1,21 @@
- class Ship{
-    constructor(shipLength, shipName){
-        this.shipLength = shipLength;
-        this.hitNum = shipLength;
-        this.shipName = shipName;
-  
-    }
+class Ship {
+  constructor(shipLength, shipName) {
+    this.shipLength = shipLength;
+    this.hitNum = shipLength;
+    this.shipName = shipName;
+  }
 
-   
-    hit(){
-    this.hitNum--
-    }
+  hit() {
+    this.hitNum--;
+  }
 
-    isSunk(){
-        if(this.hitNum <= 0)
-            {
-                return true
-            } else {
-                return false
-            };
+  isSunk() {
+    if (this.hitNum <= 0) {
+      return true;
+    } else {
+      return false;
     }
+  }
 }
 
-module.exports = Ship
+module.exports = Ship;
