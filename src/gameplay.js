@@ -202,7 +202,7 @@ const placeShips = (player) =>{
                 return
              } //else {
           
-           e.target.textContent = "➡"
+           e.target.textContent = arrows[0]
 
    
         e.target.setAttribute("style", "background-color: blue")
