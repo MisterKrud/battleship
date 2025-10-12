@@ -1,5 +1,16 @@
 import { computerPlayer } from "./computerPlayer";
 const Player = require("./player");
+/*TODO LIST
+Logic:
+Make computer smarter
+Add better messages and instructions in the game
+Improve styling
+
+Maybe:
+Fix human player animation
+Allow player to choose player types? ( Add second human...)
+*/
+
 
 /*
 Items for clean up:
