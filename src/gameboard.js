@@ -32,14 +32,14 @@ const gameboard = (rows = 10, cols = 10)=>{
         ])
 
 
-      
+      const placedShips =[]
 
  
 
     const placeShip = (ship, row, col, direction='row') => {
         console.log(board)
        
-        if(parseInt(row)+parseInt(ship.shipLength)>board.length+1 || parseInt(col)+parseInt(ship.shipLength)>board.length+1){
+        if(parseInt(row)+parseInt(ship.shipLength)>board.length || parseInt(col)+parseInt(ship.shipLength)>board.length){
             console.log(col+(ship.shipLength))
             console.log(`${ship.shipName} won't fit`)
             return
@@ -48,6 +48,15 @@ const gameboard = (rows = 10, cols = 10)=>{
         }
        for(l=0; l<ship.shipLength; l++){
         if(direction === "col"){
+            console.log({
+  row,
+  col,
+  l,
+  rowIndex: parseInt(row) + l,
+  colIndex: parseInt(col),
+  boardRow: board[parseInt(row) + l],
+  boardLength: board.length
+});
             if(board[parseInt(row)+l][parseInt(col)]!=`${parseInt(row)+l},${parseInt(col)}`){
                
                  console.log(`${ship.shipName} will hit another ship`)
@@ -57,10 +66,10 @@ const gameboard = (rows = 10, cols = 10)=>{
         } else {
             if(direction === "row"){
 if(board[parseInt(row)][parseInt(col)+l]!=`${parseInt(row)},${parseInt(col)+l}`){
-    console.log(`typeofs`)
-    console.log(typeof(row), typeof(parseInt(row)))
-    console.log(typeof(col), typeof(parseInt(col)))
-    console.log(typeof(l), typeof(parseInt(l)))
+    // console.log(`typeofs`)
+    // console.log(typeof(row), typeof(parseInt(row)))
+    // console.log(typeof(col), typeof(parseInt(col)))
+    // console.log(typeof(l), typeof(parseInt(l)))
                  console.log(board[parseInt(row)][parseInt(col)+l] + ` &&& ${parseInt(row)},${parseInt(col)+l}`)
                 console.log(`${ship.shipName} will hit another ship`)
                 return
@@ -75,16 +84,17 @@ if(board[parseInt(row)][parseInt(col)+l]!=`${parseInt(row)},${parseInt(col)+l}`)
             if(direction === 'col'){
                 
                 board[parseInt(row)+l][parseInt(col)] = ship.shipName
-                console.log(ship.shipName)
+                
+                // console.log(ship.shipName)
      
             } else {
                  board[parseInt(row)][parseInt(col)+l] = ship.shipName
-             console.log(ship.shipName)
+            //  console.log(ship.shipName)
             }
           
             ship.abbr = shipName
         }
-        
+        placedShips.push(ship)
         return ship.cells
     
     }
