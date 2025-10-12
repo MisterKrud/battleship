@@ -2,8 +2,9 @@ import { computerPlayer } from "./computerPlayer";
 
 const Player = require("./player");
 
-export const player1 = Player("human", "Player 1")
-export const player2 = computerPlayer("computer", "Player 2")
+const player1 = Player("human", "Player 1")
+const player2 = computerPlayer("computer", "Player 2")
+// export const player3 = computerPlayer("computer", "Player 3");
 
 const body = document.querySelector("body");
 
@@ -49,20 +50,25 @@ startButton.textContent = "Play";
 export const createDom = () => {
   renderBoard(player1);
   renderBoard(player2);
+//   renderBoard(player3)
   body.prepend(announcements);
   announcements.appendChild(startButton);
 placeShips(player1)
+
 
 //  placeShips(player2)
   startButton.addEventListener("click", () => {
     console.log(`Button clicked: playing round for ${players[0].name}`);
     const board = document.getElementById("player-1")
     const board2 = document.getElementById("player-2")
+    // const board3 = document.getElementById("player-3")
 
     
     board.removeEventListener("mouseover", placeShips.shipHelper)
     board2.removeEventListener("mouseover",  placeShips.shipHelper)
-   
+    // board3.removeEventListener("mouseover",  placeShips.shipHelper)
+   player2.placeShips()
+//    player3.placeShips()
     playRound();
    
   });
@@ -138,6 +144,8 @@ const playRound = (player = players[0], opposition = players[1]) => {
     
   } else {
     board.addEventListener("click", handler);
+    // console.log('no idea')
+    
   }
 };
 
@@ -205,7 +213,7 @@ const placeShips = (player) =>{
            e.target.textContent = arrows[0]
 
    
-        e.target.setAttribute("style", "background-color: blue")
+        e.target.setAttribute("style", "background-color: wheat")
         e.target.addEventListener("mouseleave", resetCellStylingOnMouseleave)
         // e.target.addEventListener("wheel", changeShipDirection)
         

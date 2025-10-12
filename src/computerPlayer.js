@@ -3,6 +3,41 @@ const Player = require ("./player.js")
 export const computerPlayer = (type, name) =>  {
      const {board, playerBoard, gameOver } = Player(type = "computer", name)
 
+
+
+ const placeShips = () =>{
+while(playerBoard.shipArray.length>0){
+    let rowOrCol = Math.random()
+    let direction = "row"
+    if(rowOrCol < 0.5) direction = "col"
+    if(direction === "col"){
+    playerBoard.placeShip(playerBoard.shipArray[0], Math.floor(Math.random() *(board.length-playerBoard.shipArray.length)), Math.floor(Math.random() *10), direction)
+    } else if(direction === "row"){
+        playerBoard.placeShip(playerBoard.shipArray[0], Math.floor(Math.random() *10), Math.floor(Math.random() *(board.length-playerBoard.shipArray.length)), direction)
+    }
+}
+
+    //get ship[0] from playerBoard.sipArray
+    //choose its direction
+    //place it randomly on the board
+
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+ }    
+
 const playRound = () => {
 
    
@@ -60,7 +95,7 @@ const getComputerAttackCoords = () => {
 
 
     };
-    return { board, playerBoard, gameOver, getComputerAttackCoords,type, name}
+    return { board, playerBoard, gameOver, placeShips, getComputerAttackCoords,type, name}
 }
 
 

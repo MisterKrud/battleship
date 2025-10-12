@@ -47,7 +47,10 @@ const gameboard = (rows = 10, cols = 10)=>{
             return
             // throw new Error(`The ${ship.shipName} is too big to be placed there`)
        
-        } 
+        } else {
+
+
+
        for(l=0; l<ship.shipLength; l++){
         if(direction === "col"){
             console.log({
@@ -80,6 +83,8 @@ if(board[parseInt(row)][parseInt(col)+l]!=`-`){
         }
         }
        }
+    } 
+    
         const shipName = ship.shipName.substring(0,3)
         for(l=0; l<ship.shipLength; l++){
            
@@ -96,6 +101,8 @@ if(board[parseInt(row)][parseInt(col)+l]!=`-`){
           
             ship.abbr = shipName
         }
+
+        
         shipArray.shift()
         placedShips.push(ship)
         return ship.cells
