@@ -27,18 +27,64 @@ while(playerBoard.shipArray.length>0){
 }
  }    
 
- //------------Computer player game play------------
- //Generate two random numbers for placement on board
-const playRound = () => {
 
-    const generateRow = Math.floor(Math.random() *10);
+const getRandomCoordinates = () => {
+ const generateRow = Math.floor(Math.random() *10);
      const generateCol = Math.floor(Math.random() *10);
     const generateCoordinates =  [generateRow, generateCol]
 
    return generateCoordinates
-
 }
 
+ //------------Computer player game play------------
+ //Generate two random numbers for placement on board
+const playRound = () => {
+    
+    if(hits.length>0) {
+        let hitCoords = hits[hits.length-1]
+        const splitCoords = (hitCoords.split(''))
+        console.log(splitCoords)
+        console.log(hitCoords)
+        console.log(board[splitCoords[0]][splitCoords[1]])
+        if(board[splitCoords[0]][splitCoords[1]]!=="-"){
+           let nextHit = []
+           nextHit.push([splitCoords[0], splitCoords[1]],[parseInt(splitCoords[0])+1, splitCoords[1]],[parseInt(splitCoords[0]-1), splitCoords[1]], [splitCoords[0],parseInt(splitCoords[1]+1)], [splitCoords[0], parseInt(splitCoords[1]-1)])
+           console.log(nextHit)
+           nextHit.forEach(hit => {
+            if(hit[0]>=0 && hit[0]<=9 && hit[1]>=0 && hit[1]<=9 && board[hit[0]][hit[1]]!=="💥"&&board[hit[0]][hit[1]]!=="🚫"){
+                hitCoords.push(hit);
+                console.log(`hitCoords chosen: ${hitCoords}`)
+               
+            } else {
+                hitCoords = []
+             const finalCoords =   getRandomCoordinates()
+             return finalCoords
+            }
+           })
+        } if(hitCoords.length>0){
+            return hitCoords
+        } else {
+   
+        playRound()
+        } 
+    } else { 
+    const finalCoords = getRandomCoordinates()
+    return finalCoords
+
+
+   
+    }
+}
+
+
+const checkSuccessfulHits = () => {
+    //find a hit cell
+    //generate an array of neighbouring coordinates
+    //for each coordinate
+    //attempt attack
+    //pop
+    //until array length is zero
+}
 
 
 //
@@ -58,11 +104,13 @@ const getNewAttackCoords = (n=0) => {
         cellToHit = getNewAttackCoords(n)
         
        } else {
+        if(boardCell !== "-"){
             hits.push(`${cellToHit[0]}${cellToHit[1]}`)
+       
             console.log('hits')
             console.log(hits)
        }
-       
+    }
      
        return cellToHit
     }
@@ -82,6 +130,29 @@ const getComputerAttackCoords = () => {
 
 
     };
+
+
+
+
+
+// const findAdjacentHitCells = () => {
+//     const positiveHit = "💥";
+//     let row;
+//     let col;
+//     console.log(board)
+//    board.forEach(row =>{
+//     row.forEach(cell=>{
+//         if(cell === positiveHit){
+//             col = row.indexOf(positiveHit)
+//             console.log(col)
+//         }
+//     })
+//    })
+//    console.log(col)
+//    return [0,0]
+// }
+
+
     return { board, playerBoard, gameOver, placeShips, getComputerAttackCoords,type, name, clearBoard}
 }
 

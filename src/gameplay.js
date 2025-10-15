@@ -156,7 +156,7 @@ const playRound =  (player = players[0], opposition = players[1], callback) => {
 
   console.log('Clicked:', e.target);
         // board.removeEventListener("click", handler);
-      //Add 'hit' class for tracking & animate
+     
      
 
       //Remove event handler at conclusion of turn
@@ -185,8 +185,7 @@ const playRound =  (player = players[0], opposition = players[1], callback) => {
   //---------Computer player auto attacks--------------
   //Check player type
   if (player.type === "computer") {
-    //Timeout for 0.5 seconds
-    // setTimeout(() => {
+   
       //Get coordinates for attack (computerPlayer factory generates 2 random numbers)
       const attackCoords = player.getComputerAttackCoords();
 
@@ -201,7 +200,7 @@ const playRound =  (player = players[0], opposition = players[1], callback) => {
           attackCoords[1]
         }`
       );
-      // Animate (CSS)
+     
     
 
       //Populate DOM cell with text from factory gameboard array
@@ -398,6 +397,7 @@ const placeShips = (player) => {
   board.addEventListener("click", checkAndPlaceShipsOnBoard);
 };
 
+//Animate attacked cell
 const appendAndAnimateCell = (cell,) => {
   cell.appendChild(document.createElement("div"));
   cell.firstChild.classList.add("animate")
