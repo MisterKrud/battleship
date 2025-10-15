@@ -30,7 +30,7 @@ let player2 = computerPlayer("computer", "Player 2");
 //--------Render initial DOM elements--------------
 const body = document.querySelector("body");
 
-//Mke boards for both players
+//Make boards for both players
 const renderBoard = (player) => {
   const playerBoard = document.createElement("div");
 
@@ -100,14 +100,14 @@ let gameOver = false;
 let players = [player1, player2];
 
 //----Function to swap players------
-const changeAcitvePlayer = () => {
+const changeActivePlayer =  () => {
   const nextPlayer = players.pop(players[1]);
   players.unshift(nextPlayer);
   console.log(`Active player is ${players[0].name}`);
 };
 
 //---------Play a round of the game (place guess on board)-----------
-const playRound = (player = players[0], opposition = players[1]) => {
+const playRound =  (player = players[0], opposition = players[1], callback) => {
   //Announce current player
   announcements.textContent = `${player.name}'s turn`;
 
@@ -126,8 +126,9 @@ const playRound = (player = players[0], opposition = players[1]) => {
   //----------Click handler for human player------------
   const handler = (e) => {
     //Ignore clicks outside cell elements, or that have already been hit (marked with 'hit' class)
-    if (!e.target.classList === "cell" || e.target.classList.contains("hit")) {
+    if (!e.target.classList.contains("cell") || e.target.classList.contains("hit")) {
       console.log(e.target.classList);
+      console.log('Clicked:', e.target);
       return;
     } else {
       //Cell is valid----
@@ -135,19 +136,32 @@ const playRound = (player = players[0], opposition = players[1]) => {
       const row = e.target.getAttribute("row");
       const col = e.target.getAttribute("col");
 
-      //Add animation on cell
-      e.target.classList.add("animate");
-      //-----------Receive Attack Function----- (from player.gameboard factory)
-      opposition.playerBoard.receiveAttack(row, col);
+      //Append "shot" div and add animation on cell
+   
+ 
 
+      // oppositionBoard.removeEventListener("click", handler);
+      console.log(`removed event listener from board (bottom)`)
+      // e.target.firstChild.classList.add("animate")
+
+      //-----------Receive Attack Function----- (from player.gameboard factory)
+  
+      opposition.playerBoard.receiveAttack(row, col);
+      appendAndAnimateCell(e.target)
+// e.target.firstChild.classList.add("animate")
       //Get text from player's board array and populate cell
-      e.target.textContent = opposition.board[row][col];
+      
+        e.target.firstChild.textContent = opposition.board[row][col];
+        // e.target.classList.add("hit");
+
+  console.log('Clicked:', e.target);
+        // board.removeEventListener("click", handler);
       //Add 'hit' class for tracking & animate
-      e.target.classList.add("hit");
-      e.target.classList.remove("animate");
+     
 
       //Remove event handler at conclusion of turn
-      board.removeEventListener("click", handler);
+      oppositionBoard.removeEventListener("click", handler);
+    
 
       //---------GameOver flag watches for player.gameBoard.ships map size
       //------gameboard factory deletes ships from map when they are destroyed
@@ -160,20 +174,26 @@ const playRound = (player = players[0], opposition = players[1]) => {
       }
 
       //------Game not over - play another round
-      playGame();
+     e.target.classList.remove("animation")
+ playGame();
+      
+     
+   
     }
   };
 
-  //---------Computer player auto attacks
+  //---------Computer player auto attacks--------------
   //Check player type
   if (player.type === "computer") {
     //Timeout for 0.5 seconds
-    setTimeout(() => {
+    // setTimeout(() => {
       //Get coordinates for attack (computerPlayer factory generates 2 random numbers)
       const attackCoords = player.getComputerAttackCoords();
 
       //------------Receive attack function-------------
       opposition.playerBoard.receiveAttack(attackCoords[0], attackCoords[1]);
+      let row = attackCoords[0];
+      let col = attackCoords[1]
 
       //Get corresponding cell in DOM
       const attackedCell = document.getElementById(
@@ -181,12 +201,16 @@ const playRound = (player = players[0], opposition = players[1]) => {
           attackCoords[1]
         }`
       );
-      //Animate (CSS)
-      attackedCell.classList.add("animate");
+      // Animate (CSS)
+    
 
       //Populate DOM cell with text from factory gameboard array
-      attackedCell.textContent =
+      setTimeout(()=>{
+         appendAndAnimateCell(attackedCell)
+attackedCell.firstChild.textContent =
         opposition.board[attackCoords[0]][attackCoords[1]];
+      },500)
+      
 
       //----------Gameover--- Check otherplayers ship map size---
       if (opposition.playerBoard.ships.size === 0) {
@@ -198,22 +222,25 @@ const playRound = (player = players[0], opposition = players[1]) => {
       }
 
       //Remove animation
-      setTimeout(() => {
-        attackedCell.classList.remove("animate");
-      }, 1000);
       playGame();
-    }, 500);
+      attackedCell.classList.remove("animation")
+    
   } else {
     //-----------Human player (if not a computer)------------
     //Add click handler to allow DOM manipulation
     oppositionBoard.addEventListener("click", handler);
+    console.log('Added handler from oppositionboard (bottom)')
   }
 };
 
 //----------Game controller----------------
 const playGame = () => {
   //Swap players
-  changeAcitvePlayer();
+
+changeActivePlayer();
+
+  
+  
 
   //Check for gameOver flag
   if (!gameOver) {
@@ -303,10 +330,10 @@ const placeShips = (player) => {
   //------Place ships on board----
   const checkAndPlaceShipsOnBoard = (e) => {
     //Get next ship to place from player.gameboard array
-    let nextShip = player.playerBoard.shipArray[0];
+    let nextShip = player.playerBoard.shipArray[0]; //**Checking against array should move to gameboard
 
     //If no ships are left, remove the eventlistener
-    if (player.playerBoard.shipArray.length <= 0) {
+    if (player.playerBoard.shipArray.length <= 0) {//**
       board.removeEventListener("mouseover", checkAndPlaceShipsOnBoard);
       return;
     } else {
@@ -315,7 +342,7 @@ const placeShips = (player) => {
       let shipCell = e.target;
 
       //Run loop to dtermine length of ship against size of board to ensure ship will fit
-      for (let n = 0; n < nextShip.shipLength; n++) {
+      for (let n = 0; n < nextShip.shipLength; n++) { //++Make nextShip a variable in gameboard
         const row = e.target.getAttribute("row");
         const col = e.target.getAttribute("col");
         let x = parseInt(row);
@@ -328,7 +355,6 @@ const placeShips = (player) => {
 
           //If direction is col - expand down rows
         } else if (directions[0] === "col") {
-          console.log(`"col": ${directions}`);
           x = x + n;
           shipCell = document.getElementById(`${playerIdName}-${x}${y}`);
         }
@@ -371,3 +397,10 @@ const placeShips = (player) => {
 
   board.addEventListener("click", checkAndPlaceShipsOnBoard);
 };
+
+const appendAndAnimateCell = (cell,) => {
+  cell.appendChild(document.createElement("div"));
+  cell.firstChild.classList.add("animate")
+ 
+        cell.classList.add("hit")
+}

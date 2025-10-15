@@ -63,6 +63,7 @@ const gameboard = (rows = 10, cols = 10) => {
         //Check columns and rows depending on placement direction
         if (direction === "col") {
           if (board[parseInt(row) + l][parseInt(col)] !== `-`) {
+            console.log(`Content of cell in array: ${board[parseInt(row) + l][parseInt(col)]}`)
             console.log(`${ship.shipName} will hit another ship`);
             return;
           }
