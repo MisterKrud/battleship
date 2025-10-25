@@ -3,22 +3,78 @@
   to { transform: scale(1); }
 }
 
+body {
+    display: flex;
+    font-family: 'Courier New', Courier, monospace;
+     background-color: black;
+    color: rgb(106, 255, 106);
+}
+
+#announcements {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    align-items: center;
+    font-size: 1.2rem;
+    padding: 1.4rem;
+    border:rgb(255, 255, 255) 1px solid;
+    margin: 5rem 1rem 3rem;
+    white-space: pre-line;
+    box-shadow: gainsboro 2px 2px 3px;;
+   
+}
+
+.playing{
+    font-size: 1.4rem !important;
+    text-align: center;
+    padding: 1.2rem !important;
+}
+
+button {
+width: 5rem;
+padding: .4rem;
+background-color: black;
+color:rgb(106, 255, 106);
+font-family:'Courier New', Courier, monospace;
+outline: white .1rem solid;
+box-shadow: white 2px 2px 1px ;
+}
+
+button:hover{
+    background-color: rgb(106, 255, 106);
+    color: black;
+}
+
+button:active{
+    transform: translateX(1px) translateY(1px);
+}
+
 .board{
     margin: 40px;
+    text-align: center;
+    font-size: 1.6rem;
+    
 }
 
 .cell{
 
     
     border: .1px solid gray;
-    height: 1.5rem;
-    width: 1.5rem;
+    /* box-shadow: gainsboro 1px 1px; */
+    height: 2rem;
+    width: 2rem;
     margin: .5px;
     padding: 2px;
     display: flex;
     align-items:center;
     justify-content: center;
+    box-shadow: gainsboro 1px 1px 2px;
     
+}
+
+.hover-cell {
+    background-color: rgb(106, 255, 106);
+    color: black;
 }
 
 .row {
@@ -27,45 +83,62 @@
     
 }
 
-.active{
+/* .active{
     padding: 0;
     margin: auto 0;
    border: 2px red solid;
-}
+} */
 
 .win .cell{
-    background-color: lightgreen;
+    background-color: red;
+    
 }
 
 .ship{
-    border-radius: .6rem;
+    border-radius: 50%;
+    box-shadow: none;
+    
     
 }
 
 .ship--destroyer{
-    background-color: lightsteelblue !important;
+    background-color: rgb(41, 114, 209) !important;
+    border: rgb(41, 114, 209) 1px solid;
+    
 }
 
 .ship--submarine{
-    background-color: lightgoldenrodyellow !important;
+    background-color: rgb(255, 255, 87) !important;
+    border: rgb(255,255,87) 1px solid;
 }
 
 .ship--cruiser{
-    background-color: lightgreen !important;
+    background-color: rgb(255, 179, 65) !important;
+    border: rgb(255, 179, 65) 1px solid;
 }
 
 .ship--battleship{
-    background-color: rgb(191, 148, 216) !important;
+    background-color: rgb(158, 53, 218) !important;
+    border: rgb(158, 53, 218) 1px solid;
 }
 
 .ship--carrier{
-    background-color: lightpink !important;
+    background-color: rgb(243, 56, 84) !important;
+    border: rgb(243, 56, 84) 1px solid;
 }
 
 .animate{
     transform: scale(1.5);
   animation: shrink 1s forwards;
-  border: none;
+  /* border: rgb(106, 255, 106) .1px solid; */
   border-radius: 50%;
-  background-color:rgb(219, 214, 219);
+  /* background-color:white; */
+}
+
+.hit {
+    background-color: rgb(106, 255, 106);
+}
+
+.positive{
+    background-color: coral !important;
 }

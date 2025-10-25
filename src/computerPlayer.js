@@ -43,6 +43,8 @@ const getRandomCoordinates = () => {
  //------------Computer player game play------------
  //Generate two random numbers for placement on board
 const playRound = () => {
+
+    //UNUSED (NOT WORKING) FUNCTION FOR BETTER COMPUTER PLAY (ADJACENT CELLS)
     
     // if(hits.length>0) {
     //     let hitCoords = hits[hits.length-1]

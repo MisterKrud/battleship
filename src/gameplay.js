@@ -39,6 +39,9 @@ const renderBoard = (player) => {
   const boardId = player.name.replace(" ", "-").toLowerCase();
   playerBoard.id = boardId;
   body.appendChild(playerBoard);
+  const boardLabel = document.createElement("div");
+  boardLabel.textContent = `${player.name.toUpperCase()}`
+  playerBoard.prepend(boardLabel)
 
   //Create rows and cells to match player gameboards
   for (let i = 0; i < player.board.length; i++) {
@@ -65,8 +68,11 @@ const renderBoard = (player) => {
 const announcements = document.createElement("div");
 announcements.id = "announcements";
 
+const instructions = document.createElement("div");
+
 const startButton = document.createElement("button");
-startButton.textContent = "Play";
+startButton.textContent = "PLAY";
+const startingInstructions = "Use your mouse to place your ships on the Player 1 board. \r\n \r\nWhen all ships are placed, press 'Play'"
 
 //----------Create Elements in DOM----------
 //This is the main function
@@ -74,8 +80,12 @@ export const createDom = () => {
   renderBoard(player1);
   renderBoard(player2);
 
-  body.prepend(announcements);
+  body.appendChild(announcements);
+  announcements.textContent = startingInstructions
   announcements.appendChild(startButton);
+  
+ 
+
 
   //Function for human player (player 1) to place ships on the board
   placeShips(player1);
@@ -83,11 +93,15 @@ export const createDom = () => {
   //Clicking button begins game
   startButton.addEventListener("click", () => {
     if (player1.playerBoard.shipArray.length > 0) {
-      announcements.textContent = " You need to place all your ships first";
-      announcements.prepend(startButton);
+      announcements.textContent = " You need to place all your ships first!";
+      announcements.append(startButton);
     } else {
       //Computer player (player 2) function to autoplace ships on board
       player2.placeShips();
+
+      announcements.classList.add("playing")
+   
+    announcements.textContent = "GO! \r\n \r\n \r\n \r\nClick Player 2's board to attack";
     
 
       //Play first round
@@ -113,7 +127,7 @@ const changeActivePlayer =  () => {
 //---------Play a round of the game (place guess on board)-----------
 const playRound =  (player = players[0], opposition = players[1], callback) => {
   //Announce current player
-  announcements.textContent = `${player.name}'s turn`;
+  // announcements.textContent = `${player.name}'s turn`;
 
   // Get player board & Opposition board in DOM
   const board = document.getElementById(
@@ -174,7 +188,7 @@ const playRound =  (player = players[0], opposition = players[1], callback) => {
         oppositionBoard.classList.remove("active");
 
         //'win' class is added for styling
-        board.classList.add("win");
+        oppositionBoard.classList.add("win");
       }
 
       //------Game not over - play another round
@@ -221,7 +235,7 @@ attackedCell.firstChild.textContent =
 
         //Adjust classes for styling
         board.classList.remove("active");
-        board.classList.add("win");
+        oppositionBoard.classList.add("win");
       }
 
       //Remove animation
@@ -252,12 +266,12 @@ changeActivePlayer();
     playRound(players[0]);
   } else {
     //Game is over - Announce winner
-    announcements.textContent = ` ${players[1].name} wins! Click Start button to play again`;
+    announcements.textContent = ` ${players[1].name.toUpperCase()} WINS! \r\n Click the button to play again`;
 
     //Add a 'Play again' button with an event listener and append it to the DOM
     const playAgain = document.createElement("button");
     playAgain.textContent = "Play again!";
-    announcements.prepend(playAgain);
+    announcements.appendChild(playAgain);
     playAgain.addEventListener("click", () => {
       //Clear the page
       body.innerHTML = "";
@@ -303,7 +317,8 @@ const placeShips = (player) => {
     //Add arrow to current cell (for ship direction)
     e.target.textContent = arrows[0];
     //Style background of active cell
-    e.target.setAttribute("style", "background-color: wheat");
+    e.target.classList.add("hover-cell")
+    //  e.target.setAttribute("style", "color: black");
 
     //Reset styling on mouseleave
     e.target.addEventListener("mouseleave", resetCellStylingOnMouseleave);
@@ -327,7 +342,8 @@ const placeShips = (player) => {
   //Reset Cell styling function
   const resetCellStylingOnMouseleave = (e) => {
     //remove backgound colour styling and clear text
-    e.target.setAttribute("style", "background-color: none");
+    // e.target.setAttribute("style", "background-color: none");
+    e.target.classList.remove("hover-cell")
     e.target.textContent = "";
   };
 
@@ -368,9 +384,9 @@ const placeShips = (player) => {
           //add ship name to player.board ship array
           //Add shipname to dom cell class list
           player.playerBoard.placeShip(nextShip, row, col, directions[0]);
-          if (player.board[x][y] === nextShip.shipName)
+          if (player.board[x][y] === nextShip.shipName){
             shipCell.classList.add(`ship`, `ship--${nextShip.shipName}`);
-
+          }
           //If ship array is now empty - remove event listeners"
           //wheel(direction), mouseenter(hover styling), mouseleave(reset styling & text)
           if (player.playerBoard.shipArray.length <= 0) {
@@ -408,6 +424,7 @@ const appendAndAnimateCell = (cell,) => {
   cell.firstChild.classList.add("animate")
  
         cell.classList.add("hit")
+        
 }
 
 
