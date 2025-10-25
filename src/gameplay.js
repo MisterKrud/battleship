@@ -6,15 +6,12 @@ Make computer smarter
 Add better messages and instructions in the game
 Improve styling
 
-Maybe:
-Fix human player animation
 Allow player to choose player types? ( Add second human...)
 */
 
 
 /*
 Items for clean up:
-1. Double handling between shipsArray and ships Map
 2. playRound/playTurn need to be clarified for use - 
     especially first execution (playRound)
 3. Game over flags seem to be repeated - possible redundancy
@@ -29,6 +26,8 @@ let player2 = computerPlayer("computer", "Player 2");
 
 //--------Render initial DOM elements--------------
 const body = document.querySelector("body");
+const container = document.createElement("div")
+container.id="container"
 
 //Make boards for both players
 const renderBoard = (player) => {
@@ -38,8 +37,10 @@ const renderBoard = (player) => {
   playerBoard.className = "board";
   const boardId = player.name.replace(" ", "-").toLowerCase();
   playerBoard.id = boardId;
-  body.appendChild(playerBoard);
+  body.appendChild(container)
+  container.appendChild(playerBoard);
   const boardLabel = document.createElement("div");
+  boardLabel.className = "board-label";
   boardLabel.textContent = `${player.name.toUpperCase()}`
   playerBoard.prepend(boardLabel)
 
@@ -80,7 +81,7 @@ export const createDom = () => {
   renderBoard(player1);
   renderBoard(player2);
 
-  body.appendChild(announcements);
+  container.appendChild(announcements);
   announcements.textContent = startingInstructions
   announcements.appendChild(startButton);
   
@@ -101,7 +102,7 @@ export const createDom = () => {
 
       announcements.classList.add("playing")
    
-    announcements.textContent = "GO! \r\n \r\n \r\n \r\nClick Player 2's board to attack";
+    announcements.textContent = "GO!  \r\nClick Player 2's board to attack";
     
 
       //Play first round
@@ -274,7 +275,7 @@ changeActivePlayer();
     announcements.appendChild(playAgain);
     playAgain.addEventListener("click", () => {
       //Clear the page
-      body.innerHTML = "";
+      container.innerHTML = "";
 
       //Create new layers to clear gameboards
       player1 = Player("human", "Player1");
@@ -428,7 +429,7 @@ const appendAndAnimateCell = (cell,) => {
 }
 
 
-//Computer Intelligence
+//Computer Intelligence - currently unused and incomplete
 const human = player1
 const computer = player2
 console.log(`Computer hits`)

@@ -3,24 +3,42 @@
   to { transform: scale(1); }
 }
 
-body {
-    display: flex;
-    font-family: 'Courier New', Courier, monospace;
+
+body{
+font-family: 'Courier New', Courier, monospace;
      background-color: black;
     color: rgb(106, 255, 106);
+    border-bottom: rgb(106, 255, 106) .1rem solid;
+    padding: 2rem 0;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+#banner{
+   text-align: center;
+   font-size: 4rem;
+   border-bottom: rgb(106, 255, 106) .1rem solid; 
+   padding-bottom: 1rem;
+}
 #announcements {
     display: flex;
     flex-direction: column;
-    justify-content:space-around;
+    justify-content:space-between;
     align-items: center;
     font-size: 1.2rem;
     padding: 1.4rem;
     border:rgb(255, 255, 255) 1px solid;
-    margin: 5rem 1rem 3rem;
+    margin: 2rem 1rem 1rem;
     white-space: pre-line;
-    box-shadow: gainsboro 2px 2px 3px;;
+    box-shadow: gainsboro 2px 2px 3px;
+    max-width: 20rem;
    
 }
 
@@ -38,6 +56,7 @@ color:rgb(106, 255, 106);
 font-family:'Courier New', Courier, monospace;
 outline: white .1rem solid;
 box-shadow: white 2px 2px 1px ;
+margin: 2rem 0 0 0 ;
 }
 
 button:hover{
@@ -50,25 +69,30 @@ button:active{
 }
 
 .board{
-    margin: 40px;
+    margin: 1.2rem;
     text-align: center;
     font-size: 1.6rem;
     
 }
 
+.board-label {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+}
+
 .cell{
 
     
-    border: .1px solid gray;
+    border: .1px solid rgb(189, 189, 189);
     /* box-shadow: gainsboro 1px 1px; */
     height: 2rem;
     width: 2rem;
-    margin: .5px;
+    /* margin: .5px; */
     padding: 2px;
     display: flex;
     align-items:center;
     justify-content: center;
-    box-shadow: gainsboro 1px 1px 2px;
+    box-shadow: gainsboro 2px 2px 3px;
     
 }
 
@@ -91,7 +115,7 @@ button:active{
 
 .win .cell{
     background-color: red;
-    
+
 }
 
 .ship{
