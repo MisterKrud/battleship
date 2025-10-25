@@ -88,12 +88,16 @@ export const createDom = () => {
     } else {
       //Computer player (player 2) function to autoplace ships on board
       player2.placeShips();
+    
 
       //Play first round
       playRound();
     }
   });
+  return {player1}
 };
+
+
 
 //Gameplay elements - gameover flag, player array
 let gameOver = false;
@@ -223,6 +227,7 @@ attackedCell.firstChild.textContent =
       //Remove animation
       playGame();
       attackedCell.classList.remove("animation")
+      console.log(player2.hits)
     
   } else {
     //-----------Human player (if not a computer)------------
@@ -404,3 +409,29 @@ const appendAndAnimateCell = (cell,) => {
  
         cell.classList.add("hit")
 }
+
+
+//Computer Intelligence
+const human = player1
+const computer = player2
+console.log(`Computer hits`)
+console.log(computer.hits)
+
+
+const findAdjacentHitCells = () => {
+    const positiveHit = "💥";
+    let row;
+    let col;
+    console.log(human.board)
+   human.board.forEach(row =>{
+    row.forEach(cell=>{
+        if(cell === positiveHit){
+            col = row.indexOf(positiveHit)
+            console.log(col)
+        }
+    })
+   })
+   console.log(col)
+   return [positiveHit]
+}
+

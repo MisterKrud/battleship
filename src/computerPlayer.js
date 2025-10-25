@@ -1,10 +1,14 @@
 const Player = require ("./player.js")
 
+
+
 export const computerPlayer = (type, name) =>  {
      const {board, playerBoard, gameOver, clearBoard } = Player(type = "computer", name)
 
      //Array to track hits -- may no longer be needed
 const hits = []
+
+
 
 
 //---------Computer Player function to place ships in array---------
@@ -40,51 +44,67 @@ const getRandomCoordinates = () => {
  //Generate two random numbers for placement on board
 const playRound = () => {
     
-    if(hits.length>0) {
-        let hitCoords = hits[hits.length-1]
-        const splitCoords = (hitCoords.split(''))
-        console.log(splitCoords)
-        console.log(hitCoords)
-        console.log(board[splitCoords[0]][splitCoords[1]])
-        if(board[splitCoords[0]][splitCoords[1]]!=="-"){
-           let nextHit = []
-           nextHit.push([splitCoords[0], splitCoords[1]],[parseInt(splitCoords[0])+1, splitCoords[1]],[parseInt(splitCoords[0]-1), splitCoords[1]], [splitCoords[0],parseInt(splitCoords[1]+1)], [splitCoords[0], parseInt(splitCoords[1]-1)])
-           console.log(nextHit)
-           nextHit.forEach(hit => {
-            if(hit[0]>=0 && hit[0]<=9 && hit[1]>=0 && hit[1]<=9 && board[hit[0]][hit[1]]!=="💥"&&board[hit[0]][hit[1]]!=="🚫"){
-                hitCoords.push(hit);
-                console.log(`hitCoords chosen: ${hitCoords}`)
+    // if(hits.length>0) {
+    //     let hitCoords = hits[hits.length-1]
+    //     const splitCoords = (hitCoords.split(''))
+    //     console.log(splitCoords)
+    //     console.log(hitCoords)
+    //     console.log(board[splitCoords[0]][splitCoords[1]])
+    //     if(board[splitCoords[0]][splitCoords[1]]!=="-"){
+    //        let nextHit = []
+    //        nextHit.push([splitCoords[0], splitCoords[1]],[parseInt(splitCoords[0])+1, splitCoords[1]],[parseInt(splitCoords[0]-1), splitCoords[1]], [splitCoords[0],parseInt(splitCoords[1]+1)], [splitCoords[0], parseInt(splitCoords[1]-1)])
+    //        console.log(nextHit)
+    //        nextHit.forEach(hit => {
+    //         if(hit[0]>=0 && hit[0]<=9 && hit[1]>=0 && hit[1]<=9 && board[hit[0]][hit[1]]!=="💥"&&board[hit[0]][hit[1]]!=="🚫"){
+    //             hitCoords.push(hit);
+    //             console.log(`hitCoords chosen: ${hitCoords}`)
                
-            } else {
-                hitCoords = []
-             const finalCoords =   getRandomCoordinates()
-             return finalCoords
-            }
-           })
-        } if(hitCoords.length>0){
-            return hitCoords
-        } else {
+    //         } else {
+    //             hitCoords = []
+    //          const finalCoords =   getRandomCoordinates()
+    //          return finalCoords
+    //         }
+    //        })
+    //     } if(hitCoords.length>0){
+    //         return hitCoords
+    //     } else {
    
-        playRound()
-        } 
-    } else { 
+    //     playRound()
+    //     } 
+    // } else { 
+        // checkSuccessfulHits()
     const finalCoords = getRandomCoordinates()
     return finalCoords
 
 
    
-    }
+    // }
 }
 
 
-const checkSuccessfulHits = () => {
+// const checkSuccessfulHits = () => {
+//     let positiveHits = []
+//     board.forEach(row => {
+//         row.forEach(col =>{
+//             console.log(col)
+//             if(col ==="💥"){
+//                 let x = board.indexOf(row)
+//                 console.log(x)
+//                let y = row.indexOf(col)
+//                console.log(y)
+//                positiveHits.push([x,y])
+//                console.log(positiveHits)
+//             }
+//         })
+//     })
+
     //find a hit cell
     //generate an array of neighbouring coordinates
     //for each coordinate
     //attempt attack
     //pop
     //until array length is zero
-}
+// }
 
 
 //
@@ -104,12 +124,12 @@ const getNewAttackCoords = (n=0) => {
         cellToHit = getNewAttackCoords(n)
         
        } else {
-        if(boardCell !== "-"){
+        // if(boardCell !== "-"){
             hits.push(`${cellToHit[0]}${cellToHit[1]}`)
        
-            console.log('hits')
+            console.log('---HITS---')
             console.log(hits)
-       }
+    //    }
     }
      
        return cellToHit
@@ -153,6 +173,11 @@ const getComputerAttackCoords = () => {
 // }
 
 
-    return { board, playerBoard, gameOver, placeShips, getComputerAttackCoords,type, name, clearBoard}
+
+// console.log(body)
+const oppositionBoard = document.querySelector(".board")
+console.log(oppositionBoard)
+
+    return { board, playerBoard, gameOver, placeShips, getComputerAttackCoords,type, name, clearBoard, hits}
 }
 
